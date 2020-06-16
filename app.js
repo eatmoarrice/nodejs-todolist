@@ -61,7 +61,7 @@ function saveData(data) {
 
 function addTodo(id, todo, status) {
 	const data = loadData();
-	const newTodo = { id: id, todo: todo, status: status };
+	const newTodo = { id: id, todo: todo, complete: status };
 	data.push(newTodo);
 	saveData(data);
 }
