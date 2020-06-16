@@ -46,7 +46,7 @@ function listTodo(data, text) {
 			} else {
 				console.log("|" + chalk.bold.yellow("Status: ") + chalk.red("incomplete"));
 			}
-			console.log("|==============================");
+			console.log("|______________________________");
 			console.log("");
 		});
 	} else {
