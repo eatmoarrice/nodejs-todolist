@@ -12,26 +12,6 @@ function loadData() {
 	}
 }
 
-// if (process.argv[2] === "list") {
-// 	console.log(chalk.green.bold("Listing stuff"));
-// 	const data = loadData();
-// 	data.forEach(({ todo, status }) =>
-// 		console.log(`
-//         Shit to do: ${todo}
-//         status: ${status}`)
-// 	);
-// } else if (process.argv[2] === "add") {
-// 	let todo = process.argv[3];
-// 	let status = process.argv[4] || false;
-// 	if (todo) {
-// 		addTodo(todo, status);
-// 	} else {
-// 		console.log("Provide the body of your list please.");
-// 	}
-// } else {
-// 	console.log("Could not understand shit.");
-// }
-
 function listTodo(data, text) {
 	if (data.length > 0) {
 		console.log(chalk.green.underline.bold(`Your ${text} todo list is:`));
@@ -80,8 +60,6 @@ yargs.command({
 	command: "list_complete",
 	describe: "Listing all completed todos",
 	handler: function (args) {
-		// console.log(args);
-		// console.log(chalk.underline.bgBlue.bold("Completed tasks:"));
 		let data = loadData();
 		data = data.filter((item) => {
 			if (item.complete) {
@@ -111,9 +89,9 @@ yargs.command({
 	describe: "Delete Todo with a specific ID",
 	handler: function (args) {
 		const id = args._[1];
-		// console.log(chalk.underline.bgBlue.bold("Completed tasks:"));
 		const data = loadData();
-		data.splice(id, 1);
+		const index = data.findIndex((item) => (item.id = id));
+		data.splice(index - 1, 1);
 		saveData(data);
 	}
 });
@@ -123,7 +101,6 @@ yargs.command({
 	describe: "Toggle the complete state of a specific Todo",
 	handler: function (args) {
 		const id = args._[1];
-		// console.log(chalk.underline.bgBlue.bold("Completed tasks:"));
 		const data = loadData();
 		data[id].complete = !data[id].complete;
 		saveData(data);
@@ -134,8 +111,6 @@ yargs.command({
 	command: "delete_all",
 	describe: "Delete everything",
 	handler: function (args) {
-		// console.log(chalk.underline.bgBlue.bold("Completed tasks:"));
-
 		saveData([]);
 	}
 });
@@ -144,7 +119,6 @@ yargs.command({
 	command: "delete_completed",
 	describe: "Delete all completed tasks",
 	handler: function (args) {
-		// console.log(chalk.underline.bgBlue.bold("Completed tasks:"));
 		let data = loadData();
 		console.log(data);
 		let data2 = data.filter((item) => {
@@ -180,7 +154,6 @@ yargs.command({
 			id = array[array.length - 1].id;
 		}
 		addTodo(id + 1, arg.todo, arg.complete);
-		console.log("finished adding");
 	}
 });
 
